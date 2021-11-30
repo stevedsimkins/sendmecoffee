@@ -7,45 +7,36 @@ import "hardhat/console.sol";
 
 contract BuyMeCoffee {
 
-  uint256 totalCoffees;
+  uint totalCoffees;
 
-  event NewCoffee(address indexed from, string amount);
+  event NewCoffee(address indexed from, string amount, string message);
 
-  address payable public owner;
+  address public owner;
 
   struct Coffee {
     address sender;
+    string amount;
     string message;
   }
 
   Coffee[] coffees;
 
-  constructor() payable {
-    owner = payable(msg.sender);
+  constructor()  {
+    console.log("Contract constructed");
   }
 
-  function deposit(string memory _message) public payable {
+  function transfer(address sender, string memory _amount, string memory _message) public {
     totalCoffees += 1;
-    console.log("%s has sent %s coffees", msg.sender, _message);
-    coffees.push(Coffee(msg.sender, _message));
-    emit NewCoffee(msg.sender, _message);
-  }
-  
-  function withdraw() public {
-    // get the amount of Ether stored in this contract
-    uint amount = address(this).balance;
-
-    // send all Ether to owner
-    // Owner can receive Ether since the address of owner is payable
-    (bool success, ) = owner.call{value: amount}("");
-    require(success, "Failed to send Ether");
+    console.log("%s has sent %s ether with the message: %s", msg.sender, _amount, _message);
+    coffees.push(Coffee(msg.sender, _amount, _message));
+    emit NewCoffee(msg.sender, _amount, _message);
   }
 
   function getAllCoffees() view public returns (Coffee[] memory) {
     return coffees;
   }
 
-  function getTotalCoffees() public view returns (uint256) {
+  function getTotalCoffees() public view returns (uint) {
     console.log("Total coffees received: %s", totalCoffees);
     return totalCoffees;
   }
