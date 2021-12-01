@@ -7,7 +7,7 @@ async function main() {
   // let contractBalance = await hre.ethers.provider.getBalance(coffeeContract.address);
   // console.log("Contract Balance:", hre.ethers.utils.formatEther(contractBalance));
 
-  // let coffeeTxn = await coffeeContract.deposit("Hello", {
+  // let coffeeTxn = await coffeeContract.deposit("This is a message!", "5.0", {
   //   value: ethers.utils.parseEther("5.0")
   // });
   // await coffeeTxn.wait();

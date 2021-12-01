@@ -9,12 +9,13 @@ contract BuyMeCoffee {
 
   uint256 totalCoffees;
 
-  event NewCoffee(address indexed from, string amount);
+  event NewCoffee(address indexed from, string amount, string message);
 
   address payable public owner;
 
   struct Coffee {
     address sender;
+    string amount;
     string message;
   }
 
@@ -24,11 +25,11 @@ contract BuyMeCoffee {
     owner = payable(msg.sender);
   }
 
-  function deposit(string memory _message) public payable {
+  function deposit(string memory _message, string memory _amount) public payable {
     totalCoffees += 1;
-    console.log("%s has sent %s coffees", msg.sender, _message);
-    coffees.push(Coffee(msg.sender, _message));
-    emit NewCoffee(msg.sender, _message);
+    console.log("%s has sent %s coffees with the message %s", msg.sender, _amount, _message);
+    coffees.push(Coffee(msg.sender, _amount, _message));
+    emit NewCoffee(msg.sender, _amount, _message);
   }
   
   function withdraw() public {
